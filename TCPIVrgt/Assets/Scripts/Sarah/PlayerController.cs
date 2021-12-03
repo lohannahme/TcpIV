@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
     public float speed;
     public float jumpHeight; 
     public float dir = 1;
