@@ -6,9 +6,11 @@ public class LuzColetável : MonoBehaviour
 {
     
     private PlayerController slime;
+    private UiController uiController;
     void Start()
     {
         slime = GameObject.FindObjectOfType<PlayerController>();
+        uiController = GameObject.FindObjectOfType<UiController>();
         
     }
 
@@ -17,9 +19,16 @@ public class LuzColetável : MonoBehaviour
     {
         if ((float)transform.position.x < slime.transform.position.x -10)
         {
-            Debug.Log("entrou");
             Destroy(this.gameObject);
         }
 
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "slime")
+        {
+            Destroy(this.gameObject);
+            uiController.points++;
+        }
     }
 }

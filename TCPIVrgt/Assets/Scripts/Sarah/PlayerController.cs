@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    //public BoxCollider2D slimeDownCollider;
+    //public GameObject slimeCollider;
     public float speed;
     public float jumpHeight; 
     public float dir = 1;
@@ -16,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private float swipeEndTime;
     private float swipeTime;
 
+    private bool hasJumped = false;
+
+
     private Vector2 startSwipePosition;
     private Vector2 endSwipePosition;
     private float swipelength;
@@ -23,19 +27,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
+        //slimeDownCollider.
+        //slimeDownCollider.transform.position(-Vector3.up, 0, 0);
+        //slimeCollider.SetActive(true);
     }
     void FixedUpdate()
     {
         SwipeTest();
-        //transform.Translate(Vector2.right * 10 * Time.deltaTime);
         playerRB.velocity= new Vector2(dir * speed * Time.deltaTime, playerRB.velocity.y);
-        //playerRB.velocity = Vector2.up * jumpHeight * Time.deltaTime;
-       // if (Input.GetMouseButtonDown(0)) //(Input.GetKeyDown(KeyCode.Space))
-      //  {
-           
-            //transform.Translate(Vector2.up * 100 * Time.deltaTime);
-           // playerRB.velocity = Vector2.up * jumpHeight * Time.deltaTime;
-      //  }
     }
 
     void SwipeTest()
@@ -69,15 +68,39 @@ public class PlayerController : MonoBehaviour
         float yDistance = Mathf.Abs(Distance.y);
         if (yDistance > xDistance)
         {
-            if (Distance.y > 0)
+            if (Distance.y > 0 && hasJumped==false)
             {
-                playerRB.velocity = Vector2.up * jumpHeight * Time.deltaTime;
-            }
-            if (Distance.y < 0)
-            {
-                Debug.Log("abaixou");
+                jump();
             }
         }
+            if (Distance.y < 0)
+            {
+            playerRB.velocity = Vector2.down * jumpHeight * Time.deltaTime;
+            Debug.Log("abaixou");
+            }
+        }
+    void jump()
+    {
+        playerRB.velocity = Vector2.up * jumpHeight * Time.deltaTime;
+        hasJumped = true;
+        // transform.Translate(Vector2.up * 100 * Time.deltaTime);
+        //playerRB.AddForce(new Vector2(0, 400));
     }
-
+    void down()
+    {
+       // slimeDownCollider.SetActive(true);
+        //slimeCollider.SetActive(false);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "chao")
+        {
+            hasJumped = false;
+        }
+    }
 }
+
+
+
+
+

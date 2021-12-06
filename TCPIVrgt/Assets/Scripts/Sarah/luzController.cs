@@ -16,7 +16,6 @@ public class luzController : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(temp1);
         temp1 -= Time.deltaTime;
         if (temp1 < 0)
         {
@@ -30,7 +29,6 @@ public class luzController : MonoBehaviour
                 instanciou = false;
                 temp1 = Random.Range(2,6);
             }
-            //temp1 = 5f;
         }
     }
 }
