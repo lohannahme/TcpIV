@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     //public BoxCollider2D slimeDownCollider;
     //public GameObject slimeCollider;
+    private Animator anim;
     public float speed;
     public float jumpHeight; 
     public float dir = 1;
@@ -18,7 +19,10 @@ public class PlayerController : MonoBehaviour
     private float swipeTime;
 
     private bool hasJumped = false;
-
+    bool animWalking = false;
+    public BoxCollider2D box2D;
+    public BoxCollider2D box2DDown;
+    private float tempAnim =1f;
 
     private Vector2 startSwipePosition;
     private Vector2 endSwipePosition;
@@ -27,14 +31,44 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
-        //slimeDownCollider.
-        //slimeDownCollider.transform.position(-Vector3.up, 0, 0);
-        //slimeCollider.SetActive(true);
+        anim = GetComponent<Animator>();
+        box2D.enabled = true;
+        box2DDown.enabled = false;
     }
     void FixedUpdate()
     {
         SwipeTest();
-        playerRB.velocity= new Vector2(dir * speed * Time.deltaTime, playerRB.velocity.y);
+        transitionDownWalk();
+        walk();
+        
+        //teste pc
+       /* if (Input.GetMouseButtonDown(0) && hasJumped == false)
+        {
+            jump();
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            down();
+        }*/
+    }
+    void walk()
+    {
+        playerRB.velocity = new Vector2(dir * speed * Time.deltaTime, playerRB.velocity.y);
+    }
+    void transitionDownWalk()
+    {
+        if (animWalking == true)
+        {
+            tempAnim -= Time.deltaTime;
+            if (tempAnim < 0)
+            {
+                box2D.enabled = true;
+                box2DDown.enabled = false;
+                anim.SetTrigger("walking");
+                animWalking = false;
+                tempAnim = 1f;
+            }
+        }
     }
 
     void SwipeTest()
@@ -75,26 +109,44 @@ public class PlayerController : MonoBehaviour
         }
             if (Distance.y < 0)
             {
-            playerRB.velocity = Vector2.down * jumpHeight * Time.deltaTime;
-            Debug.Log("abaixou");
+                down();
             }
         }
     void jump()
     {
         playerRB.velocity = Vector2.up * jumpHeight * Time.deltaTime;
         hasJumped = true;
+        anim.SetBool("jumped", true);
         // transform.Translate(Vector2.up * 100 * Time.deltaTime);
         //playerRB.AddForce(new Vector2(0, 400));
     }
     void down()
     {
-       // slimeDownCollider.SetActive(true);
-        //slimeCollider.SetActive(false);
+        if (hasJumped==true)
+        {
+            anim.SetBool("a", true);
+            anim.SetBool("jumped", false);
+            playerRB.velocity = Vector2.down * jumpHeight * Time.deltaTime;
+            
+            
+        }
+        if (hasJumped == false)
+        {
+            anim.SetTrigger("downD");
+            animWalking = true;
+            box2D.enabled = false;
+            box2DDown.enabled = true;
+        }
+       
+        Debug.Log("abaixou");
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "chao")
         {
+            anim.SetBool("jumped", false);
+            anim.SetBool("a", false);
             hasJumped = false;
         }
     }
