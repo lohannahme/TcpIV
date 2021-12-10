@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //public BoxCollider2D slimeDownCollider;
-    //public GameObject slimeCollider;
+    public AudioSource jumpSound;
+    public AudioSource walkSound;
+    public AudioSource dashSound;
     private Animator anim;
     public float speed;
     public float jumpHeight; 
@@ -19,10 +20,10 @@ public class PlayerController : MonoBehaviour
     private float swipeTime;
 
     private bool hasJumped = false;
-    bool animWalking = false;
+    bool animDown = false;
     public BoxCollider2D box2D;
     public BoxCollider2D box2DDown;
-    private float tempAnim =1f;
+    private float tempAnimDown =1f;
 
     private Vector2 startSwipePosition;
     private Vector2 endSwipePosition;
@@ -34,15 +35,16 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         box2D.enabled = true;
         box2DDown.enabled = false;
+        walkSound.Play();
     }
     void FixedUpdate()
     {
         SwipeTest();
         transitionDownWalk();
         walk();
-        
+       
         //teste pc
-       /* if (Input.GetMouseButtonDown(0) && hasJumped == false)
+       /*if (Input.GetMouseButtonDown(0) && hasJumped == false)
         {
             jump();
         }
@@ -57,16 +59,17 @@ public class PlayerController : MonoBehaviour
     }
     void transitionDownWalk()
     {
-        if (animWalking == true)
+        if (animDown == true)
         {
-            tempAnim -= Time.deltaTime;
-            if (tempAnim < 0)
+            tempAnimDown -= Time.deltaTime;
+            if (tempAnimDown < 0)
             {
                 box2D.enabled = true;
                 box2DDown.enabled = false;
-                anim.SetTrigger("walking");
-                animWalking = false;
-                tempAnim = 1f;
+                anim.SetBool("downU", false);
+                walkSound.Play();
+                tempAnimDown = 1f;
+                animDown = false;
             }
         }
     }
@@ -117,8 +120,9 @@ public class PlayerController : MonoBehaviour
         playerRB.velocity = Vector2.up * jumpHeight * Time.deltaTime;
         hasJumped = true;
         anim.SetBool("jumped", true);
-        // transform.Translate(Vector2.up * 100 * Time.deltaTime);
-        //playerRB.AddForce(new Vector2(0, 400));
+        anim.SetBool("downU", false);
+        walkSound.Stop();
+        jumpSound.Play();
     }
     void down()
     {
@@ -127,27 +131,30 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("a", true);
             anim.SetBool("jumped", false);
             playerRB.velocity = Vector2.down * jumpHeight * Time.deltaTime;
-            
-            
+
+
         }
         if (hasJumped == false)
         {
-            anim.SetTrigger("downD");
-            animWalking = true;
+            anim.SetBool("downU",true);
+            animDown = true;
             box2D.enabled = false;
             box2DDown.enabled = true;
         }
        
         Debug.Log("abaixou");
-
+        walkSound.Stop();
+        dashSound.Play();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "chao")
         {
+            //Debug.Log("coliidu");
             anim.SetBool("jumped", false);
             anim.SetBool("a", false);
             hasJumped = false;
+            if(animDown == false) walkSound.Play();
         }
     }
 }
