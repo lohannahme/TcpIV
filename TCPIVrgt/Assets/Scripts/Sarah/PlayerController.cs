@@ -1,57 +1,78 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
+    private UiController uiController;
+    public Light2D pointLight;
+
+    public AudioSource collectedSound;
     public AudioSource jumpSound;
     public AudioSource walkSound;
     public AudioSource dashSound;
     private Animator anim;
-    public float speed;
+    private Rigidbody2D playerRB;
+    public BoxCollider2D box2D;
+    public BoxCollider2D box2DDown;
+
+    private float speed;
+    private float speedConst=450;
+    private float speedMult = 1;
     public float jumpHeight; 
     public float dir = 1;
-    private Rigidbody2D playerRB;
+
+    private float tempAnimDown = 1f;
+    private float tempSpeedIncrease = 10f;
+
     public float maxSwipetime;
     public float minSwipeDistance;
-
     private float swipeStartTime;
     private float swipeEndTime;
     private float swipeTime;
-
-    private bool hasJumped = false;
-    bool animDown = false;
-    public BoxCollider2D box2D;
-    public BoxCollider2D box2DDown;
-    private float tempAnimDown =1f;
 
     private Vector2 startSwipePosition;
     private Vector2 endSwipePosition;
     private float swipelength;
 
+    private bool hasJumped = false;
+    bool animDown = false;
+    
+
     void Start()
     {
+        uiController = GameObject.FindObjectOfType<UiController>(); 
         playerRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
         box2D.enabled = true;
         box2DDown.enabled = false;
+
         walkSound.Play();
+
+        speed = speedConst * speedMult;
+
+        decreaseLight();
+
     }
     void FixedUpdate()
     {
         SwipeTest();
         transitionDownWalk();
         walk();
-       
+        speedIncrease();
+
         //teste pc
-       /*if (Input.GetMouseButtonDown(0) && hasJumped == false)
+       /* if (Input.GetMouseButtonDown(0) && hasJumped == false)
         {
             jump();
         }
         if (Input.GetMouseButtonDown(1))
         {
             down();
-        }*/
+        }
+        */
     }
     void walk()
     {
@@ -73,7 +94,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
     void SwipeTest()
     {
         if (Input.touchCount > 0)
@@ -97,7 +117,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
     void swipeControl()
     {
         Vector2 Distance = endSwipePosition - startSwipePosition;
@@ -146,15 +165,46 @@ public class PlayerController : MonoBehaviour
         walkSound.Stop();
         dashSound.Play();
     }
+    void speedIncrease()
+    {
+        //aumentar a cada 10 segundos o multiplicador da speed e do pontos de distancia
+
+        speed = speedConst * speedMult;
+        tempSpeedIncrease -= Time.deltaTime;
+            if (tempSpeedIncrease < 0)
+            {
+            speedMult = speedMult + 0.1f;
+            uiController.distanceIncrease = uiController.distanceIncrease + 0.1f;
+                tempSpeedIncrease = 10f;
+            }
+        
+    }
+    public void increaseLight()
+    {
+        pointLight.pointLightOuterRadius = 8;
+        pointLight.intensity = 2;
+    }
+    public void decreaseLight()
+    {
+        pointLight.pointLightOuterRadius = 6;
+        pointLight.intensity = 1;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "chao")
         {
-            //Debug.Log("coliidu");
             anim.SetBool("jumped", false);
             anim.SetBool("a", false);
             hasJumped = false;
             if(animDown == false) walkSound.Play();
+        }
+        
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "luz")
+        {
+            collectedSound.Play();
         }
     }
 }

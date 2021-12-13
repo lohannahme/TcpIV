@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LuzColetável : MonoBehaviour
 {
-    
     private PlayerController slime;
     private UiController uiController;
     void Start()
@@ -17,8 +16,9 @@ public class LuzColetável : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((float)transform.position.x < slime.transform.position.x -10)
+        if ((float)transform.position.x < slime.transform.position.x -5)
         {
+            uiController.contCol=0;
             Destroy(this.gameObject);
         }
 
@@ -27,6 +27,7 @@ public class LuzColetável : MonoBehaviour
     {
         if (collision.gameObject.tag == "slime")
         {
+            uiController.contCol++;
             Destroy(this.gameObject);
             uiController.points++;
         }

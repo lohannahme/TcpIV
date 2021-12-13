@@ -10,14 +10,21 @@ public class UiController : MonoBehaviour
     public Text distanceUi;
     public GameObject pausedUi;
     public int points;
-    public float distance;
-    public float a;
+    private float distance;
+    private float distanceConst;
+    public float distanceIncrease;
     public int dist;
+    public int minPowerUp;
+
+    //contagem de coletavel pego
+    public int contCol;
     void Start()
     {
         points = 0;
-         dist= Mathf.RoundToInt(distance);
+        dist= Mathf.RoundToInt(distance);
         slime = GameObject.FindObjectOfType<PlayerController>();
+        distanceConst = 8f;
+        distanceIncrease = 1;
     }
 
     void Update()
@@ -25,6 +32,7 @@ public class UiController : MonoBehaviour
         distanceCount();
         pointsUi.text = points.ToString();
         distanceUi.text = dist.ToString();
+        lightCheck();
     }
     public void pause()
     {
@@ -36,7 +44,18 @@ public class UiController : MonoBehaviour
     }
     void distanceCount()
     {
-        distance += Time.deltaTime*1.5f;
+        distance += distanceConst * Time.deltaTime* distanceIncrease;
         dist = Mathf.RoundToInt(distance);
+    }
+    void lightCheck()
+    {
+        if (contCol >= minPowerUp)
+        {
+            slime.increaseLight();
+        }
+        else
+        {
+            slime.decreaseLight();
+        }
     }
 }
