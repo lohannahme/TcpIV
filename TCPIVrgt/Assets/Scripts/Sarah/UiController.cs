@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UiController : MonoBehaviour
 {
+    public PlayerController slime;
     public Text pointsUi;
     public Text distanceUi;
     public GameObject pausedUi;
@@ -16,7 +17,8 @@ public class UiController : MonoBehaviour
     {
         points = 0;
          dist= Mathf.RoundToInt(distance);
-}
+        slime = GameObject.FindObjectOfType<PlayerController>();
+    }
 
     void Update()
     {
@@ -29,6 +31,8 @@ public class UiController : MonoBehaviour
         Time.timeScale = Time.timeScale == 1.0f ? 0.0f : 1.0f;
         if (Time.timeScale == 1.0f) pausedUi.SetActive(false);
         if (Time.timeScale == 0.0f) pausedUi.SetActive(true);
+        slime.walkSound.Stop();
+
     }
     void distanceCount()
     {
