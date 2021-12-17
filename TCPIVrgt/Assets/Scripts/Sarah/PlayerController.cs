@@ -38,7 +38,9 @@ public class PlayerController : MonoBehaviour
 
     private bool hasJumped = false;
     bool animDown = false;
-    
+    [HideInInspector] public UnityEngine.Events.UnityEvent jumpEvent;
+    [HideInInspector] public UnityEngine.Events.UnityEvent diveEvent;
+    [HideInInspector] public UnityEngine.Events.UnityEvent crouchEvent;
 
     void Start()
     {
@@ -142,6 +144,8 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("downU", false);
         walkSound.Stop();
         jumpSound.Play();
+
+        jumpEvent.Invoke();
     }
     void down()
     {
@@ -151,7 +155,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("jumped", false);
             playerRB.velocity = Vector2.down * jumpHeight * Time.deltaTime;
 
-
+            diveEvent.Invoke();
         }
         if (hasJumped == false)
         {
@@ -159,6 +163,8 @@ public class PlayerController : MonoBehaviour
             animDown = true;
             box2D.enabled = false;
             box2DDown.enabled = true;
+
+            crouchEvent.Invoke();
         }
        
         Debug.Log("abaixou");
