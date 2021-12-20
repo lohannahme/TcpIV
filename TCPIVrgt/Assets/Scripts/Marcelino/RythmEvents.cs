@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RythmEvents : MonoBehaviour
 {
+    [SerializeField] Text resposta;
     [SerializeField] AudioClip tum;
     [SerializeField] AudioClip tah;
     [SerializeField] SimpleRythmTool rythmTool;
@@ -95,10 +97,12 @@ public class RythmEvents : MonoBehaviour
         aviso = false;
         if (hit)
         {
+            resposta.text = "Acertou!";
             Debug.Log("Acertô miseravi!");
         }
         else
         {
+            resposta.text = "Errou!";
             Debug.Log("Erouuuu!");
         }
         if (needJump)
