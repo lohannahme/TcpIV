@@ -164,8 +164,8 @@ MonoBehaviour:
   jumpSound: {fileID: 46711895}
   walkSound: {fileID: 46711897}
   dashSound: {fileID: 46711896}
-  box2D: {fileID: 46711893}
-  box2DDown: {fileID: 46711889}
+  box2D: {fileID: 46711889}
+  box2DDown: {fileID: 46711893}
   jumpHeight: 500
   dir: 1
   maxSwipetime: 10
@@ -192,18 +192,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.002219282, y: 0.0006269552}
+  m_Offset: {x: -0.072066605, y: -4.0981812}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.12}
+    oldSize: {x: 19.2, y: 10.8}
     newSize: {x: 4.27, y: 4.27}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15786229, y: 0.08119463}
+  m_Size: {x: 2.459383, y: 2.4786177}
   m_EdgeRadius: 0
 --- !u!50 &46711890
 Rigidbody2D:
@@ -265,8 +265,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -8877770548514571806, guid: 47b169c2682192b42b63e94c57455fc1,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4d5266a03208ae14c992b67fdfa3755c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -285,8 +284,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46711887}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.185, y: -3.46, z: 0}
-  m_LocalScale: {x: 9.090508, y: 9.090508, z: 9.090508}
+  m_LocalPosition: {x: -6.185, y: -2.5, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 1425980425}
   m_Father: {fileID: 0}
@@ -305,18 +304,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0034698173, y: 0.00091895834}
+  m_Offset: {x: -0.091977835, y: -4.665536}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.12}
+    oldSize: {x: 19.2, y: 10.8}
     newSize: {x: 4.27, y: 4.27}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16356729, y: 0.13407022}
+  m_Size: {x: 2.4426432, y: 1.215097}
   m_EdgeRadius: 0
 --- !u!95 &46711894
 Animator:
