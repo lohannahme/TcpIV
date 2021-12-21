@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public UnityEngine.Events.UnityEvent jumpEvent;
     [HideInInspector] public UnityEngine.Events.UnityEvent diveEvent;
     [HideInInspector] public UnityEngine.Events.UnityEvent crouchEvent;
+    [HideInInspector] public UnityEngine.Events.UnityEvent hitEvent;
 
     void Start()
     {
@@ -213,6 +214,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "luz")
         {
             collectedSound.Play();
+        }
+        if (collision.gameObject.CompareTag("obstaculo"))
+        {
+            hitEvent.Invoke();
         }
     }
 }

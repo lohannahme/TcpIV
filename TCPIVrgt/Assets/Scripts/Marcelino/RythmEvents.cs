@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RythmEvents : MonoBehaviour
 {
     public static RythmEvents get;
+    [SerializeField] Text resposta;
+    [SerializeField] Text hitText;
 
     [SerializeField] AudioClip tum;
     [SerializeField] AudioClip tah;
     [SerializeField] AudioClip vraw;
     [SerializeField] AudioClip swish;
+    [SerializeField] AudioClip drone;
+    [SerializeField] AudioClip rede;
     [SerializeField] SimpleRythmTool rythmTool;
     [SerializeField] PlayerController playerController;
     AudioSource source;
@@ -42,6 +47,7 @@ public class RythmEvents : MonoBehaviour
         playerController.jumpEvent.AddListener(JumpHandler);
         playerController.diveEvent.AddListener(DiveHandler);
         playerController.crouchEvent.AddListener(CrouchHandler);
+        playerController.hitEvent.AddListener(HitHandler);
 
         originalBPM = new int[rythmTool.sheets.Length];
         for (int i = 0; i < rythmTool.sheets.Length; i++)
@@ -101,7 +107,7 @@ public class RythmEvents : MonoBehaviour
         avisoCountdown = tempoAteInput;
         needJump = true;
 
-        Tum();
+        /*Tum();*/
     }
 
     public void Aviso_agacha()
@@ -111,7 +117,7 @@ public class RythmEvents : MonoBehaviour
         avisoCountdown = tempoAteInput;
         needCrouch = true;
 
-        Tah();
+        //Tah();
     }
 
     public void Aviso_tiro()
@@ -121,7 +127,7 @@ public class RythmEvents : MonoBehaviour
         avisoCountdown = tempoAteInput;
         needCrouch = needJump = true;
 
-        Vraw();
+        //Vraw();
     }
 
     public void Drone()
@@ -144,18 +150,20 @@ public class RythmEvents : MonoBehaviour
         aviso = false;
         if (hit)
         {
+            resposta.text = "Acertou!";
             Debug.Log("Acertô miseravi!");
         }
         else
         {
+            resposta.text = "Errou!";
             Debug.Log("Erouuuu!");
         }
-        if (needJump && needCrouch)
+        /*if (needJump && needCrouch)
             Tah();//outro som?
         else if (needJump)
             Tah();
         else
-            Tum();
+            Tum();*/
 
         needJump = needCrouch = false;
     }
@@ -175,14 +183,31 @@ public class RythmEvents : MonoBehaviour
 
     private void OnDisable()
     {
-        playerController.jumpEvent.RemoveAllListeners();
-        playerController.diveEvent.RemoveAllListeners();
-        playerController.crouchEvent.RemoveAllListeners();
+        playerController.jumpEvent.RemoveListener(JumpHandler);
+        playerController.diveEvent.RemoveListener(DiveHandler);
+        playerController.crouchEvent.RemoveListener(CrouchHandler);
+        playerController.hitEvent.RemoveListener(HitHandler);
     }
 
     public void SetSpeed(float mult)
     {
         for (int i = 0; i < rythmTool.sheets.Length; i++)
             rythmTool.sheets[i].BPM = (int)(originalBPM[i] * mult);
+    }
+
+    private void PlayClip(AudioClip clip)
+    {
+        source.clip = clip;
+        source.Play();
+    }
+
+    private void HitHandler()
+    {
+        hitText.text = "Atingido!";
+    }
+
+    public void ResetHit()
+    {
+        hitText.text = "-";
     }
 }
