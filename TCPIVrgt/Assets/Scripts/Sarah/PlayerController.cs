@@ -182,7 +182,9 @@ public class PlayerController : MonoBehaviour
             speedMult = speedMult + 0.1f;
             uiController.distanceIncrease = uiController.distanceIncrease + 0.1f;
                 tempSpeedIncrease = 10f;
-            }
+
+            RythmEvents.get.SetSpeed(speedMult);
+        }
         
     }
     public void increaseLight()
