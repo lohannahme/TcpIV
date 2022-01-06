@@ -20,9 +20,6 @@ public class SheetEditor : Editor
         serializedObject.Update();
         EditorGUI.BeginChangeCheck();
         
-        /*_sheet.SetBPM(IntField(_sheet.BPM, "BPM", true));
-        _sheet.SetTrackCount(IntField(_sheet.trackCount, "Tracks", false));
-        _sheet.SetBeatCount(IntField(_sheet.beatCount, "Beats", false));*/
         _sheet.BPM = IntField(_sheet.BPM, "BPM", true);
         _sheet.trackCount = IntField(_sheet.trackCount, "Tracks", false);
         _sheet.beatCount = IntField(_sheet.beatCount, "Beats", false);
