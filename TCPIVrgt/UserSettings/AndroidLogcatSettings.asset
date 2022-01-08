@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "0061468448",
         "name": "com.tcp4.runslimerun",
-        "processId": 30669,
+        "processId": 19281,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -42,6 +42,30 @@
             "deviceId": "0061468448",
             "name": "com.tcp4.runslimerun",
             "processId": 30669,
+            "exited": false
+        },
+        {
+            "deviceId": "0061468448",
+            "name": "com.tcp4.runslimerun",
+            "processId": 11543,
+            "exited": false
+        },
+        {
+            "deviceId": "0061468448",
+            "name": "com.tcp4.runslimerun",
+            "processId": 10059,
+            "exited": false
+        },
+        {
+            "deviceId": "0061468448",
+            "name": "com.tcp4.runslimerun",
+            "processId": 28905,
+            "exited": false
+        },
+        {
+            "deviceId": "0061468448",
+            "name": "com.tcp4.runslimerun",
+            "processId": 19281,
             "exited": false
         }
     ],
