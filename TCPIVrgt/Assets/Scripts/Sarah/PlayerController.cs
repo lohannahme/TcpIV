@@ -180,8 +180,8 @@ public class PlayerController : MonoBehaviour
         tempSpeedIncrease -= Time.deltaTime;
             if (tempSpeedIncrease < 0)
             {
-            speedMult = speedMult + 0.1f;
-            uiController.distanceIncrease = uiController.distanceIncrease + 0.1f;
+            speedMult = speedMult + 0.05f;
+            uiController.distanceIncrease = uiController.distanceIncrease + 0.05f;
                 tempSpeedIncrease = 10f;
 
             RythmEvents.get.SetSpeed(speedMult);
