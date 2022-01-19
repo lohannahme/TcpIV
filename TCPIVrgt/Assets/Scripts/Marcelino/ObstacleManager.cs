@@ -6,7 +6,6 @@ public class ObstacleManager : MonoBehaviour
 {
     public static ObstacleManager get;
     [SerializeField] Obstacle drone, tronco, tiro;
-    [SerializeField] PlayerController player;
 
     private void Awake()
     {
@@ -31,6 +30,7 @@ public class ObstacleManager : MonoBehaviour
     private void Spawn(Obstacle obstacle)
     {
         obstacle.gameObject.SetActive(true);
-        obstacle.Spawn(player.transform.position);
+        //Vector3 spawnPos = PlayerController.get.transform.position;
+        obstacle.Spawn();
     }
 }

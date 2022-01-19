@@ -5,6 +5,9 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
+    private static PlayerController _get;
+    public static PlayerController get { get { return _get; } }
+
     private UiController uiController;
     public Light2D pointLight;
 
@@ -17,9 +20,10 @@ public class PlayerController : MonoBehaviour
     public BoxCollider2D box2D;
     public BoxCollider2D box2DDown;
 
-    private float speed;
-    private float speedConst=450;
+    [SerializeField] private float speed;
+    [SerializeField] float speedConst=450;
     private float speedMult = 1;
+    public float SpeedMult { get { return speedMult; } }
     public float jumpHeight; 
     public float dir = 1;
 
@@ -43,8 +47,15 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public UnityEngine.Events.UnityEvent crouchEvent;
     [HideInInspector] public UnityEngine.Events.UnityEvent hitEvent;
 
+    [SerializeField] float lowlightRadius = 6f;
+    [SerializeField] float lowlightIntensity = 1f;
+    [SerializeField] float highlightRadius = 8f;
+    [SerializeField] float highlightIntensity = 2f;
+
     void Start()
     {
+        _get = this;
+
         uiController = GameObject.FindObjectOfType<UiController>(); 
         playerRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -67,25 +78,26 @@ public class PlayerController : MonoBehaviour
         speedIncrease();
 
         //teste pc
-       /* if (Input.GetMouseButtonDown(0) && hasJumped == false)
+#if UNITY_EDITOR
+        if ((/*Input.GetMouseButtonDown(0) || */Input.GetKeyDown(KeyCode.UpArrow)) && hasJumped == false)
         {
             jump();
         }
-        if (Input.GetMouseButtonDown(1))
+        if (/*Input.GetMouseButtonDown(1) || */Input.GetKeyDown(KeyCode.DownArrow))
         {
             down();
         }
-        */
+#endif
     }
     void walk()
     {
-        playerRB.velocity = new Vector2(dir * speed * Time.deltaTime, playerRB.velocity.y);
+        playerRB.velocity = new Vector2(dir * speed * Time.fixedDeltaTime, playerRB.velocity.y);
     }
     void transitionDownWalk()
     {
         if (animDown == true)
         {
-            tempAnimDown -= Time.deltaTime;
+            tempAnimDown -= Time.fixedDeltaTime;
             if (tempAnimDown < 0)
             {
                 box2D.enabled = true;
@@ -139,7 +151,7 @@ public class PlayerController : MonoBehaviour
         }
     void jump()
     {
-        playerRB.velocity = Vector2.up * jumpHeight * Time.deltaTime;
+        playerRB.velocity = /*new Vector2(playerRB.velocity.x, jumpHeight * Time.fixedDeltaTime);/*/ Vector2.up * jumpHeight * Time.deltaTime;
         hasJumped = true;
         anim.SetBool("jumped", true);
         anim.SetBool("downU", false);
@@ -154,7 +166,7 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("a", true);
             anim.SetBool("jumped", false);
-            playerRB.velocity = Vector2.down * jumpHeight * Time.deltaTime;
+            playerRB.velocity = /*new Vector2(playerRB.velocity.x, -jumpHeight * Time.fixedDeltaTime);/*/ Vector2.down * jumpHeight * Time.deltaTime;
 
             diveEvent.Invoke();
         }
@@ -168,7 +180,7 @@ public class PlayerController : MonoBehaviour
             crouchEvent.Invoke();
         }
        
-        Debug.Log("abaixou");
+        //Debug.Log("abaixou");
         walkSound.Stop();
         dashSound.Play();
     }
@@ -177,7 +189,7 @@ public class PlayerController : MonoBehaviour
         //aumentar a cada 10 segundos o multiplicador da speed e do pontos de distancia
 
         speed = speedConst * speedMult;
-        tempSpeedIncrease -= Time.deltaTime;
+        tempSpeedIncrease -= Time.fixedDeltaTime;
             if (tempSpeedIncrease < 0)
             {
             speedMult = speedMult + 0.05f;
@@ -190,13 +202,13 @@ public class PlayerController : MonoBehaviour
     }
     public void increaseLight()
     {
-        pointLight.pointLightOuterRadius = 8;
-        pointLight.intensity = 2;
+        pointLight.pointLightOuterRadius = highlightRadius;
+        pointLight.intensity = highlightIntensity;
     }
     public void decreaseLight()
     {
-        pointLight.pointLightOuterRadius = 6;
-        pointLight.intensity = 1;
+        pointLight.pointLightOuterRadius = lowlightRadius;
+        pointLight.intensity = lowlightIntensity;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -218,6 +230,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("obstaculo"))
         {
             hitEvent.Invoke();
+            UiController.get.pause();//TODO: game over
         }
     }
 }

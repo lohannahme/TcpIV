@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UiController : MonoBehaviour
 {
+    private static UiController _get;
+    public static UiController get { get { return _get; } }
     public PlayerController slime;
     public Text pointsUi;
     public Text distanceUi;
@@ -20,6 +22,8 @@ public class UiController : MonoBehaviour
     public int contCol;
     void Start()
     {
+        _get = this;
+
         points = 0;
         dist= Mathf.RoundToInt(distance);
         slime = GameObject.FindObjectOfType<PlayerController>();
@@ -33,6 +37,11 @@ public class UiController : MonoBehaviour
         pointsUi.text = points.ToString();
         distanceUi.text = dist.ToString();
         lightCheck();
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Escape))
+            pause();
+#endif
     }
     public void pause()
     {

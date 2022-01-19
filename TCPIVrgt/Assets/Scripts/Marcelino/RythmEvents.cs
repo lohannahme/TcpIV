@@ -9,12 +9,13 @@ public class RythmEvents : MonoBehaviour
     [SerializeField] Text resposta;
     [SerializeField] Text hitText;
 
-    [SerializeField] AudioClip tum;
-    [SerializeField] AudioClip tah;
-    [SerializeField] AudioClip vraw;
-    [SerializeField] AudioClip swish;
+    //[SerializeField] AudioClip tum;
+    //[SerializeField] AudioClip tah;
+    //[SerializeField] AudioClip vraw;
+    //[SerializeField] AudioClip swish;
     [SerializeField] AudioClip drone;
     [SerializeField] AudioClip rede;
+    [SerializeField] AudioClip tiro;
     [SerializeField] SimpleRythmTool rythmTool;
     [SerializeField] PlayerController playerController;
     AudioSource source;
@@ -75,13 +76,13 @@ public class RythmEvents : MonoBehaviour
 
         jump = dive = crouch = false;
     }
-
+    /*
     public void Tum()
     {
         source.clip = tum;
         source.Play();
     }
-
+    
     public void Tah()
     {
         source.clip = tah;
@@ -99,7 +100,7 @@ public class RythmEvents : MonoBehaviour
         source.clip = swish;
         source.Play();
     }
-
+    */
     public void Aviso_pula()
     {
         aviso = true;
@@ -127,7 +128,7 @@ public class RythmEvents : MonoBehaviour
         avisoCountdown = tempoAteInput;
         needCrouch = needJump = true;
 
-        //Vraw();
+        PlayClip(tiro);
     }
 
     public void Drone()
@@ -151,12 +152,12 @@ public class RythmEvents : MonoBehaviour
         if (hit)
         {
             resposta.text = "Acertou!";
-            Debug.Log("Acertô miseravi!");
+            //Debug.Log("Acertô miseravi!");
         }
         else
         {
             resposta.text = "Errou!";
-            Debug.Log("Erouuuu!");
+            //Debug.Log("Erouuuu!");
         }
         /*if (needJump && needCrouch)
             Tah();//outro som?
@@ -203,11 +204,12 @@ public class RythmEvents : MonoBehaviour
 
     private void HitHandler()
     {
-        hitText.text = "Atingido!";
+        hitText.text = "Morreu!";
     }
 
     public void ResetHit()
     {
         hitText.text = "-";
+        resposta.text = "-";
     }
 }

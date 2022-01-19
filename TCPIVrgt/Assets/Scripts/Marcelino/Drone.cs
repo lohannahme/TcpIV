@@ -9,7 +9,7 @@ public class Drone : Obstacle
 
     private void Update()
     {
-        transform.position = new Vector3(transform.position .x - speed * Time.deltaTime, Mathf.Lerp(transform.position.y, atackHeight, fallSpeed * Time.deltaTime), 0);
+        transform.position = new Vector3(transform.position.x /*- speed * Time.deltaTime*/, Mathf.Lerp(transform.position.y, atackHeight, fallSpeed * speedFactor * Time.deltaTime), 0);
         /*if (Camera.main.ViewportToScreenPoint(transform.position).x < 0)
         {
             gameObject.SetActive(false);

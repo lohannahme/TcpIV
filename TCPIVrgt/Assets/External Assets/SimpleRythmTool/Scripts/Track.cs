@@ -5,6 +5,7 @@ using UnityEngine;
 public class Track : PropertyAttribute
 {
     public int arrSize = 5;
+    public string name;
     public bool[] beats;
     public UnityEngine.Events.UnityEvent OnBeat;
     public bool foldout;

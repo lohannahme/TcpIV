@@ -7,7 +7,7 @@ public class Tiro : Obstacle
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, 0f);
+        transform.position = new Vector3(transform.position.x + speed * speedFactor * Time.deltaTime, transform.position.y, 0f);
         /*if (Camera.main.ViewportToScreenPoint(transform.position).x > Screen.width)
         {
             gameObject.SetActive(false);

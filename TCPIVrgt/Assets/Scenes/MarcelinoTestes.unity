@@ -166,6 +166,8 @@ MonoBehaviour:
   dashSound: {fileID: 46711896}
   box2D: {fileID: 46711889}
   box2DDown: {fileID: 46711893}
+  speed: 0
+  speedConst: 450
   jumpHeight: 500
   dir: 1
   maxSwipetime: 10
@@ -182,6 +184,10 @@ MonoBehaviour:
   hitEvent:
     m_PersistentCalls:
       m_Calls: []
+  lowlightRadius: 6
+  lowlightIntensity: 1.5
+  highlightRadius: 9
+  highlightIntensity: 2
 --- !u!61 &46711889
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -227,7 +233,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &46711891
 SpriteRenderer:
@@ -834,6 +840,7 @@ GameObject:
   - component: {fileID: 85158616}
   - component: {fileID: 85158619}
   - component: {fileID: 85158620}
+  - component: {fileID: 85158621}
   m_Layer: 8
   m_Name: Tiro
   m_TagString: obstaculo
@@ -853,9 +860,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc237d77d4c9f94cad5542eb4eb2706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: -20, y: -3, z: 0}
-  speed: 40
+  startPosition: {x: -30, y: -3, z: 0}
+  speed: 30
   warning: {fileID: 85158620}
+  _speedFactor: 0
 --- !u!212 &85158617
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -914,7 +922,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 85158615}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20, y: -3, z: 0}
+  m_LocalPosition: {x: -30, y: -3, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 918329510}
@@ -1042,6 +1050,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!50 &85158621
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85158615}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &216203253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,11 +1181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f801410a350a9d24aa2e3874ab942038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 13, y: 8.5, z: 0}
+  startPosition: {x: 20, y: 5, z: 0}
   speed: 1
   warning: {fileID: 221226103}
+  _speedFactor: 0
   atackHeight: -2.8
-  fallSpeed: 2.5
+  fallSpeed: 1.5
 --- !u!212 &221226100
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1215,7 +1245,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221226098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: 5, z: 0}
+  m_LocalPosition: {x: 20, y: 5, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 918329510}
@@ -1259,7 +1289,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f42129f3d632bdb40bf3650db35b93fd, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.13
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1267,8 +1297,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 20
+  MinDistance: 2
+  MaxDistance: 18
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1318,7 +1348,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1464,6 +1494,147 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293983000}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &310535582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 310535584}
+  - component: {fileID: 310535583}
+  m_Layer: 0
+  m_Name: SheetObject (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &310535583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310535582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6c42a9c268cb94586d8d0337fc2d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BPM: 60
+  trackCount: 4
+  beatCount: 16
+  tracks:
+  - arrSize: 16
+    name: "Lan\xE7ar Rede"
+    beats: 01000000000000000100000000000000
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Tronco
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Aviso_pula
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+  - arrSize: 16
+    name: "Lan\xE7ar Drone"
+    beats: 00000000010000000000000001000000
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Aviso_agacha
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Drone
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+  - arrSize: 16
+    name: resultado?
+    beats: 00000100000001000000010000000100
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Resultado
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+  - arrSize: 16
+    name: Teste, apagar depois
+    beats: 00010000000100000001000000010000
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: ResetHit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+--- !u!4 &310535584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310535582}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1677185935}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &341465469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1594,6 +1765,176 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341465469}
   m_CullTransparentMesh: 0
+--- !u!1 &356845236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 356845238}
+  - component: {fileID: 356845237}
+  m_Layer: 0
+  m_Name: SheetObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &356845237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356845236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6c42a9c268cb94586d8d0337fc2d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BPM: 60
+  trackCount: 5
+  beatCount: 16
+  tracks:
+  - arrSize: 16
+    name: "Lan\xE7ar Rede"
+    beats: 01000000000000000000000000000000
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Tronco
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Aviso_pula
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+  - arrSize: 16
+    name: "Lan\xE7ar Drone"
+    beats: 00000000000000000100000000000000
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Aviso_agacha
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Drone
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+  - arrSize: 16
+    name: resultado?
+    beats: 00000100000001000000010000000100
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Resultado
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+  - arrSize: 16
+    name: Atirar
+    beats: 00000000010000000000000001000000
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Aviso_tiro
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Tiro
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+  - arrSize: 16
+    name: Teste, apagar depois
+    beats: 00010000000100000001000000010000
+    OnBeat:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: ResetHit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    foldout: 0
+--- !u!4 &356845238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356845236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1677185935}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &413777666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,7 +2019,7 @@ GameObject:
   - component: {fileID: 508481212}
   - component: {fileID: 508481213}
   m_Layer: 0
-  m_Name: SheetObject (1)
+  m_Name: SheetObject (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1710,11 +2051,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6c42a9c268cb94586d8d0337fc2d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BPM: 80
+  BPM: 60
   trackCount: 7
   beatCount: 16
   tracks:
   - arrSize: 16
+    name: "Lan\xE7ar Rede"
     beats: 01000000000000000000000000000000
     OnBeat:
       m_PersistentCalls:
@@ -1743,23 +2085,14 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 0
   - arrSize: 16
-    beats: 00010000000000000001000000000000
+    name: Apagar
+    beats: 00000000000000000000000000000000
     OnBeat:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1677185933}
-          m_MethodName: Tum
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
     foldout: 0
   - arrSize: 16
+    name: 
     beats: 00000100000001000000010000000100
     OnBeat:
       m_PersistentCalls:
@@ -1777,6 +2110,7 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 0
   - arrSize: 16
+    name: "Lan\xE7ar Drone"
     beats: 00000000000000000100000000000000
     OnBeat:
       m_PersistentCalls:
@@ -1805,21 +2139,11 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 0
   - arrSize: 16
+    name: Atirar
     beats: 00000000010000000000000001000000
     OnBeat:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1677185933}
-          m_MethodName: PlayTiro
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 1677185933}
           m_MethodName: Aviso_tiro
           m_Mode: 1
@@ -1831,9 +2155,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1677185933}
+          m_MethodName: Tiro
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     foldout: 0
   - arrSize: 16
-    beats: 00000000000100000000000000010000
+    name: Apagar
+    beats: 00000000000000000000000000000000
     OnBeat:
       m_PersistentCalls:
         m_Calls:
@@ -1850,6 +2186,7 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 0
   - arrSize: 16
+    name: Teste, Apagar depois
     beats: 00010000000100000001000000010000
     OnBeat:
       m_PersistentCalls:
@@ -1865,7 +2202,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    foldout: 1
+    foldout: 0
 --- !u!1 &510318361
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,7 +2362,6 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
-  - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
   m_Layer: 0
@@ -2035,14 +2371,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &519420029
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 0
 --- !u!114 &519420030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2178,9 +2506,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220223dda5af47745a4a463dfe0354ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 13, y: -4, z: 0}
+  startPosition: {x: 20, y: -4, z: 0}
   speed: 1
   warning: {fileID: 520685626}
+  _speedFactor: 0
 --- !u!212 &520685623
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2239,7 +2568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520685621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: -4, z: 0}
+  m_LocalPosition: {x: 20, y: -4, z: 0}
   m_LocalScale: {x: 20, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 918329510}
@@ -2481,7 +2810,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.05
+  m_Intensity: 0.04
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
@@ -2910,6 +3239,7 @@ MonoBehaviour:
   beatCount: 16
   tracks:
   - arrSize: 16
+    name: 
     beats: 01000000000000000000000000000000
     OnBeat:
       m_PersistentCalls:
@@ -2938,6 +3268,7 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 1
   - arrSize: 16
+    name: 
     beats: 00010000000000000001000000000000
     OnBeat:
       m_PersistentCalls:
@@ -2955,6 +3286,7 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 0
   - arrSize: 16
+    name: 
     beats: 00000100000001000000010000000100
     OnBeat:
       m_PersistentCalls:
@@ -2972,6 +3304,7 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 0
   - arrSize: 16
+    name: 
     beats: 00000000000000000100000000000000
     OnBeat:
       m_PersistentCalls:
@@ -3000,6 +3333,7 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 0
   - arrSize: 16
+    name: 
     beats: 00000000010000000000000001000000
     OnBeat:
       m_PersistentCalls:
@@ -3017,6 +3351,7 @@ MonoBehaviour:
           m_CallState: 2
     foldout: 0
   - arrSize: 16
+    name: 
     beats: 00000000000100000000000000010000
     OnBeat:
       m_PersistentCalls:
@@ -3213,7 +3548,6 @@ MonoBehaviour:
   drone: {fileID: 221226099}
   tronco: {fileID: 520685622}
   tiro: {fileID: 85158616}
-  player: {fileID: 46711888}
 --- !u!4 &918329510
 Transform:
   m_ObjectHideFlags: 0
@@ -3543,9 +3877,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.843
+  m_FalloffIntensity: 0.502
   m_Color: {r: 0, g: 1, b: 0.04619026, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.5
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 000000000fe4242a
   m_LightCookieSprite: {fileID: 0}
@@ -3675,7 +4009,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469068502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 4, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -3952,12 +4286,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resposta: {fileID: 1708594392}
   hitText: {fileID: 1854591026}
-  tum: {fileID: 8300000, guid: 779cc8db06ca6d24a8b3d8da2675be9d, type: 3}
-  tah: {fileID: 8300000, guid: 9bda09f65ca71804ca064b34ca69e20a, type: 3}
-  vraw: {fileID: 8300000, guid: 45d48cbde8137734898687059aff16cb, type: 3}
-  swish: {fileID: 8300000, guid: 741841170ef66e04094089916347b835, type: 3}
   drone: {fileID: 8300000, guid: f42129f3d632bdb40bf3650db35b93fd, type: 3}
   rede: {fileID: 8300000, guid: 096afb955a756e141988863ebbfd8312, type: 3}
+  tiro: {fileID: 8300000, guid: 45d48cbde8137734898687059aff16cb, type: 3}
   rythmTool: {fileID: 1677185934}
   playerController: {fileID: 46711888}
   tempoDeInput: 0.3
@@ -3976,7 +4307,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repeatZeroToLoop: 0
   sheets:
-  - {fileID: 508481213}
+  - {fileID: 356845237}
+  - {fileID: 310535583}
 --- !u!4 &1677185935
 Transform:
   m_ObjectHideFlags: 0
@@ -3990,6 +4322,8 @@ Transform:
   m_Children:
   - {fileID: 724442495}
   - {fileID: 508481212}
+  - {fileID: 356845238}
+  - {fileID: 310535584}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4232,7 +4566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1708594391
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4312,7 +4646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1854591025
 RectTransform:
   m_ObjectHideFlags: 0

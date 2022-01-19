@@ -29,21 +29,24 @@ public class SheetWindow : EditorWindow
         SerializedObject so = new SerializedObject(target);
         so.Update();
         SerializedProperty sp = so.FindProperty("tracks");
+        float identSpace = EditorGUIUtility.labelWidth + EditorGUIUtility.standardVerticalSpacing - 5;
 
         float posY = EditorGUIUtility.singleLineHeight * 3 + EditorGUIUtility.standardVerticalSpacing * 6;
-        float viewRectH = EditorGUI.GetPropertyHeight(sp) * sp.arraySize;
-        float viewRectW = 20 * (target.beatCount + 1);
+        float viewRectH = EditorGUI.GetPropertyHeight(sp) * (sp.arraySize + 1);
+        float viewRectW = 25 * (target.beatCount + 1) + identSpace;
 
         Vector2 scrl = GUI.BeginScrollView(new Rect(0, posY, EditorGUIUtility.currentViewWidth, window.rootVisualElement.contentRect.height - posY),
-                                           new Vector2(scrollPos.x, 0), new Rect(0, posY, viewRectW, 20));
+                                           new Vector2(scrollPos.x, 0), new Rect(0, posY, viewRectW, EditorGUIUtility.singleLineHeight));
         scrollPos.x = scrl.x;
 
         if (sp.arraySize > 0)
         {
             EditorGUILayout.BeginHorizontal();
+            var centeredStyle = GUI.skin.GetStyle("Label");
+            centeredStyle.alignment = TextAnchor.UpperCenter;
             for (int j = 0; j < target.beatCount; j++)
             {
-                EditorGUI.LabelField(new Rect(EditorGUIUtility.standardVerticalSpacing + j * 20, posY, 20, 20), "" + (j + 1));
+                EditorGUI.LabelField(new Rect(identSpace + EditorGUIUtility.standardVerticalSpacing + j * 25, posY, 25, EditorGUIUtility.singleLineHeight), "" + (j + 1), centeredStyle);
             }
             EditorGUILayout.EndHorizontal();
             posY += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing * 2;
@@ -51,7 +54,7 @@ public class SheetWindow : EditorWindow
 
         GUI.EndScrollView();
         scrollPos = GUI.BeginScrollView(new Rect(0, posY, EditorGUIUtility.currentViewWidth, window.rootVisualElement.contentRect.height - posY),
-                                        scrollPos, new Rect(0, posY, viewRectW, viewRectH));
+                                        scrollPos, new Rect(0, posY, viewRectW, viewRectH + posY));
 
         for (int i = 0; i < target.tracks.Length; i++)
         {

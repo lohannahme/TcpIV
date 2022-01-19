@@ -7,10 +7,23 @@ public class Obstacle : MonoBehaviour
     public Vector3 startPosition;
     public float speed;
     public AudioSource warning;
-    
-    public void Spawn(Vector3 playerPosition)
+
+    [SerializeField] float _speedFactor;
+    protected float speedFactor
     {
-        transform.position = new Vector3(playerPosition.x + startPosition.x, startPosition.y, 0f);
+        get
+        {
+            _speedFactor = PlayerController.get.SpeedMult;
+
+            return _speedFactor;
+        }
+    }
+    
+    public virtual void Spawn()
+    {
+        Vector3 playerPos = PlayerController.get.transform.position;
+        //float distanceAhead;//
+        transform.position = new Vector3(playerPos.x + startPosition.x /* speedFactor*/, startPosition.y, 0f);
         warning.Play();
     }
 }
