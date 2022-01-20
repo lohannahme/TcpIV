@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UiController : MonoBehaviour
 {
     private static UiController _get;
     public static UiController get { get { return _get; } }
     public PlayerController slime;
+    //gameover
+    public GameObject vitoriaUi;
+    public GameObject derrotaUi;
+    public GameObject botoesUi;
+    public Text recordeUi;
+    public Text pointsUiDerrota;
+    public Text recordeTextDerrota;
+    //
     public Text pointsUi;
     public Text distanceUi;
     public GameObject pausedUi;
@@ -16,7 +25,9 @@ public class UiController : MonoBehaviour
     private float distanceConst;
     public float distanceIncrease;
     public int dist;
+    public int scoreTotal;
     public int minPowerUp;
+    public bool gameOverCheck=false;
 
     //contagem de coletavel pego
     public int contCol;
@@ -33,10 +44,14 @@ public class UiController : MonoBehaviour
 
     void Update()
     {
+       
         distanceCount();
+       
+        Debug.Log(PlayerPrefs.GetInt("recorde"));
         pointsUi.text = points.ToString();
         distanceUi.text = dist.ToString();
         lightCheck();
+        scoreTotal=(points*5) +dist;
 
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -45,11 +60,42 @@ public class UiController : MonoBehaviour
     }
     public void pause()
     {
-        Time.timeScale = Time.timeScale == 1.0f ? 0.0f : 1.0f;
-        if (Time.timeScale == 1.0f) pausedUi.SetActive(false);
-        if (Time.timeScale == 0.0f) pausedUi.SetActive(true);
-        slime.walkSound.Stop();
+        if (!gameOverCheck)
+        {
+            Time.timeScale = Time.timeScale == 1.0f ? 0.0f : 1.0f;
+            if (Time.timeScale == 1.0f) pausedUi.SetActive(false);
+            if (Time.timeScale == 0.0f) pausedUi.SetActive(true);
+            slime.walkSound.Stop();
+        }
+        
+    }
+    public void gameOver()
+    {
+        gameOverCheck = true;
+        int aux=PlayerPrefs.GetInt("recorde");
+        if (scoreTotal > aux)
+        {
+            vitoriaUi.SetActive(true);
+            PlayerPrefs.SetInt("recorde", scoreTotal);
+           recordeUi.text = PlayerPrefs.GetInt("recorde").ToString();
+        }else if (scoreTotal <= aux){
+            derrotaUi.SetActive(true);
+            pointsUiDerrota.text = scoreTotal.ToString();
+            recordeTextDerrota.text = PlayerPrefs.GetInt("recorde").ToString();
+        }
+        botoesUi.SetActive(true);
+        Time.timeScale = 0;
 
+    }
+    public void restart()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex );
+
+    }
+    public void menu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
     void distanceCount()
     {

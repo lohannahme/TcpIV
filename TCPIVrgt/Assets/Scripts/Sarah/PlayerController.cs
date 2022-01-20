@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRB;
     public BoxCollider2D box2D;
     public BoxCollider2D box2DDown;
+    public CapsuleCollider2D CapDown;
+    public CapsuleCollider2D Cap2Down;
 
     [SerializeField] private float speed;
     [SerializeField] float speedConst=450;
@@ -64,8 +66,10 @@ public class PlayerController : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
-        box2D.enabled = true;
-        box2DDown.enabled = false;
+        //box2D.enabled = true;
+        CapDown.enabled = true;
+        Cap2Down.enabled = false;
+        //box2DDown.enabled = false;
 
         walkSound.Play();
 
@@ -118,8 +122,10 @@ public class PlayerController : MonoBehaviour
             tempAnimDown -= Time.fixedDeltaTime;
             if (tempAnimDown < 0)
             {
-                box2D.enabled = true;
-                box2DDown.enabled = false;
+               // box2D.enabled = true;
+                //box2DDown.enabled = false;
+                CapDown.enabled = true;
+                Cap2Down.enabled = false;
                 anim.SetBool("downU", false);
                 walkSound.Play();
                 tempAnimDown = 1f;
@@ -192,8 +198,10 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("downU",true);
             animDown = true;
-            box2D.enabled = false;
-            box2DDown.enabled = true;
+            CapDown.enabled = false;
+            Cap2Down.enabled = true;
+            //box2D.enabled = false;
+           // box2DDown.enabled = true;
 
             crouchEvent.Invoke();
         }
@@ -248,7 +256,9 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("obstaculo"))
         {
             hitEvent.Invoke();
-            UiController.get.pause();//TODO: game over
+            //UiController.get.pause();//TODO: game over
+            UiController.get.gameOver();
+            Debug.Log("Acabou");
         }
     }
 }
