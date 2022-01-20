@@ -52,10 +52,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float highlightRadius = 8f;
     [SerializeField] float highlightIntensity = 2f;
 
-    void Start()
+    bool upCommand = false, downCommand = false;
+
+    private void Awake()
     {
         _get = this;
-
+    }
+    void Start()
+    {
         uiController = GameObject.FindObjectOfType<UiController>(); 
         playerRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -70,24 +74,38 @@ public class PlayerController : MonoBehaviour
         decreaseLight();
 
     }
-    void FixedUpdate()
+
+    //Marcelino: Tive que fazer essas modificações pois o Input System da Unity não trabalha bem
+    //no FixedUpdate. Com essa modificação o Input é tratado no Update e a física no FixedUpdate.
+    private void Update()
     {
         SwipeTest();
-        transitionDownWalk();
-        walk();
-        speedIncrease();
 
         //teste pc
 #if UNITY_EDITOR
-        if ((/*Input.GetMouseButtonDown(0) || */Input.GetKeyDown(KeyCode.UpArrow)) && hasJumped == false)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space))
+                && hasJumped == false)
+            upCommand = true;
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.LeftControl))
+            downCommand = true;
+#endif
+    }
+    void FixedUpdate()
+    {
+        transitionDownWalk();
+        walk();
+        speedIncrease();
+        
+        if (upCommand)
         {
+            upCommand = false;
             jump();
         }
-        if (/*Input.GetMouseButtonDown(1) || */Input.GetKeyDown(KeyCode.DownArrow))
+        if (downCommand)
         {
+            downCommand = false;
             down();
         }
-#endif
     }
     void walk()
     {
@@ -141,13 +159,13 @@ public class PlayerController : MonoBehaviour
         {
             if (Distance.y > 0 && hasJumped==false)
             {
-                jump();
+                upCommand = true;// jump();     //continuando a modificação pra tratar o Input no Update
             }
         }
             if (Distance.y < 0)
             {
-                down();
-            }
+                downCommand = true;// down();   //continuando a modificação pra tratar o Input no Update
+        }
         }
     void jump()
     {

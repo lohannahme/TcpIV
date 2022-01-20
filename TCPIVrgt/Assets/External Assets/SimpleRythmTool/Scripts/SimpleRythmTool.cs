@@ -5,6 +5,7 @@ using UnityEngine;
 public class SimpleRythmTool : MonoBehaviour
 {
     public int repeatZeroToLoop = 0;
+    public List<int> excludeFromLoop;
     public Sheet[] sheets;
 
     int loopCounter = 0;
@@ -36,7 +37,7 @@ public class SimpleRythmTool : MonoBehaviour
     {
         if (sheetCounter < sheets.Length)
         {
-            if (beatCounter < sheets[sheetCounter].beatCount)
+            if (beatCounter < sheets[sheetCounter].beatCount && !(loopCounter > 0 && excludeFromLoop.Count > 0 && excludeFromLoop.Contains(sheetCounter)))
             {
                 runningTimePerBeat += Time.deltaTime;
                 float _timePerBeat = timePerBeat(sheetCounter);
@@ -73,7 +74,10 @@ public class SimpleRythmTool : MonoBehaviour
                 }
             }
             else
+            {
+                loopCounter++;
                 sheetCounter = 0;
+            }
         }
     }
 }

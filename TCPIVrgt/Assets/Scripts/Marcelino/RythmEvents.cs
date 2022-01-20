@@ -212,4 +212,9 @@ public class RythmEvents : MonoBehaviour
         hitText.text = "-";
         resposta.text = "-";
     }
+
+    public void SpawnColetavel()
+    {
+        ObstacleManager.get.SpawnColetavel();
+    }
 }
