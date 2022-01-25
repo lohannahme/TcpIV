@@ -9,19 +9,22 @@ public class PlayerController : MonoBehaviour
     public static PlayerController get { get { return _get; } }
 
     private UiController uiController;
-    public Light2D pointLight;
+   // public Light2D pointLight;
 
     public AudioSource collectedSound;
     public AudioSource jumpSound;
     public AudioSource walkSound;
     public AudioSource dashSound;
+
     private Animator anim;
     private Rigidbody2D playerRB;
-    public BoxCollider2D box2D;
-    public BoxCollider2D box2DDown;
+
+    //public BoxCollider2D box2D;
+    //public BoxCollider2D box2DDown;
     public CapsuleCollider2D CapDown;
     public CapsuleCollider2D Cap2Down;
 
+    [SerializeField] GameObject luzSlime;
     [SerializeField] private float speed;
     [SerializeField] float speedConst=450;
     private float speedMult = 1;
@@ -65,7 +68,7 @@ public class PlayerController : MonoBehaviour
         uiController = GameObject.FindObjectOfType<UiController>(); 
         playerRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
+        //luzSlime = GetComponent<Sprite>();
         //box2D.enabled = true;
         CapDown.enabled = true;
         Cap2Down.enabled = false;
@@ -218,9 +221,9 @@ public class PlayerController : MonoBehaviour
         tempSpeedIncrease -= Time.fixedDeltaTime;
             if (tempSpeedIncrease < 0)
             {
-            speedMult = speedMult + 0.05f;
-            uiController.distanceIncrease = uiController.distanceIncrease + 0.05f;
-                tempSpeedIncrease = 10f;
+            speedMult = speedMult + 0.03f;
+            uiController.distanceIncrease = uiController.distanceIncrease + 0.03f;
+                tempSpeedIncrease = 15f;
 
             RythmEvents.get.SetSpeed(speedMult);
         }
@@ -228,13 +231,16 @@ public class PlayerController : MonoBehaviour
     }
     public void increaseLight()
     {
-        pointLight.pointLightOuterRadius = highlightRadius;
-        pointLight.intensity = highlightIntensity;
+        luzSlime.transform.localScale = new Vector2(4.7f, 4.7f);
+        // pointLight.pointLightOuterRadius = highlightRadius;
+        // pointLight.intensity = highlightIntensity;
     }
     public void decreaseLight()
     {
-        pointLight.pointLightOuterRadius = lowlightRadius;
-        pointLight.intensity = lowlightIntensity;
+       
+        luzSlime.transform.localScale = new Vector2(3.0f, 3.0f);
+        // pointLight.pointLightOuterRadius = lowlightRadius;
+        // pointLight.intensity = lowlightIntensity;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

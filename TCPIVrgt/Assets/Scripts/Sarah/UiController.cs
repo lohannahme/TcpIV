@@ -44,6 +44,7 @@ public class UiController : MonoBehaviour
 
     void Update()
     {
+
        
         distanceCount();
        
@@ -52,6 +53,9 @@ public class UiController : MonoBehaviour
         distanceUi.text = dist.ToString();
         lightCheck();
         scoreTotal=(points*5) +dist;
+
+       // Debug.Log("scoreTotal :" + scoreTotal);
+       // Debug.Log("prefsrecorde :" + PlayerPrefs.GetInt("recorde"));
 
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -67,18 +71,18 @@ public class UiController : MonoBehaviour
             if (Time.timeScale == 0.0f) pausedUi.SetActive(true);
             slime.walkSound.Stop();
         }
-        
+       
     }
     public void gameOver()
     {
         gameOverCheck = true;
         int aux=PlayerPrefs.GetInt("recorde");
-        if (scoreTotal > aux)
+        if (scoreTotal >= aux)
         {
             vitoriaUi.SetActive(true);
             PlayerPrefs.SetInt("recorde", scoreTotal);
            recordeUi.text = PlayerPrefs.GetInt("recorde").ToString();
-        }else if (scoreTotal <= aux){
+        }else if (scoreTotal < aux){
             derrotaUi.SetActive(true);
             pointsUiDerrota.text = scoreTotal.ToString();
             recordeTextDerrota.text = PlayerPrefs.GetInt("recorde").ToString();

@@ -6,6 +6,8 @@ public class LuzColetável : MonoBehaviour
 {
     private PlayerController slime;
     private UiController uiController;
+    private float temp = 0.5f;
+    private bool luzCol=true;
     void Start()
     {
         slime = GameObject.FindObjectOfType<PlayerController>();
@@ -21,15 +23,26 @@ public class LuzColetável : MonoBehaviour
             uiController.contCol=0;
             Destroy(this.gameObject);
         }
+        if (luzCol == false)
+        {
+            temp -= Time.deltaTime;
+        }
+        if (temp < 0)
+        {
+            luzCol = true;
+            temp = 0.5f;
+        }
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "slime")
+        if (collision.gameObject.tag == "slime"&&luzCol==true)
         {
             uiController.contCol++;
-            Destroy(this.gameObject);
             uiController.points++;
+            Destroy(this.gameObject);
+            luzCol = false;
+            
         }
     }
 }
