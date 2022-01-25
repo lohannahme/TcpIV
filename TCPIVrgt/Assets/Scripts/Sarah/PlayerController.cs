@@ -230,14 +230,14 @@ public class PlayerController : MonoBehaviour
     }
     public void increaseLight()
     {
-        luzSlime.transform.localScale = new Vector2(4.7f, 4.7f);
+        luzSlime.transform.localScale = new Vector2(3.5f, 3.5f);
         // pointLight.pointLightOuterRadius = highlightRadius;
         // pointLight.intensity = highlightIntensity;
     }
     public void decreaseLight()
     {
        
-        luzSlime.transform.localScale = new Vector2(3.0f, 3.0f);
+        luzSlime.transform.localScale = new Vector2(2.0f, 2.0f);
         // pointLight.pointLightOuterRadius = lowlightRadius;
         // pointLight.intensity = lowlightIntensity;
     }
