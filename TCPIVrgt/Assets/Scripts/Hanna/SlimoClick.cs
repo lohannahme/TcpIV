@@ -16,9 +16,9 @@ public class SlimoClick : MonoBehaviour
     {
         if (_sideLeft)
         {
-            transform.LeanMoveLocalX(-110, .3f);
+            transform.LeanMoveLocalX(-110, .3f).setIgnoreTimeScale(true);
 
-            _buttons.transform.LeanMoveLocalX(58, .3f);
+            _buttons.transform.LeanMoveLocalX(58, .3f).setIgnoreTimeScale(true);
             _buttonAnimator.SetBool("Buttonfade", true);
 
             _sideLeft = false;
@@ -26,9 +26,9 @@ public class SlimoClick : MonoBehaviour
         }
         else if (_sideRight)
         {
-            transform.LeanMoveLocalX(0, .3f);
+            transform.LeanMoveLocalX(0, .3f).setIgnoreTimeScale(true);
 
-            _buttons.transform.LeanMoveLocalX(0, .3f);
+            _buttons.transform.LeanMoveLocalX(0, .3f).setIgnoreTimeScale(true);
             _buttonAnimator.SetBool("Buttonfade", false);
 
             _sideLeft = true;
