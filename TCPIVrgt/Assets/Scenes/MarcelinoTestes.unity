@@ -992,7 +992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc237d77d4c9f94cad5542eb4eb2706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: -40, y: -3.1, z: 0}
+  startPosition: {x: -30, y: -3.1, z: 0}
   speed: 30
   warning: {fileID: 85158620}
   _speedFactor: 0
@@ -1054,7 +1054,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 85158615}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40, y: -3.1, z: 0}
+  m_LocalPosition: {x: -30, y: -3.1, z: 0}
   m_LocalScale: {x: 7, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 918329510}
@@ -1675,12 +1675,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f801410a350a9d24aa2e3874ab942038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 20, y: 5, z: 0}
+  startPosition: {x: 15, y: 4, z: 0}
   speed: 1
   warning: {fileID: 221226103}
   _speedFactor: 0
   atackHeight: -2.8
-  fallSpeed: 1.5
+  fallSpeed: 2
 --- !u!212 &221226100
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1739,7 +1739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221226098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: 5, z: 0}
+  m_LocalPosition: {x: 15, y: 4, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 918329510}
@@ -2127,7 +2127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6c42a9c268cb94586d8d0337fc2d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BPM: 60
+  BPM: 80
   trackCount: 5
   beatCount: 16
   tracks:
@@ -2447,7 +2447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6c42a9c268cb94586d8d0337fc2d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BPM: 60
+  BPM: 80
   trackCount: 6
   beatCount: 16
   tracks:
@@ -3053,7 +3053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6c42a9c268cb94586d8d0337fc2d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BPM: 60
+  BPM: 80
   trackCount: 9
   beatCount: 14
   tracks:
@@ -3606,7 +3606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220223dda5af47745a4a463dfe0354ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 20, y: -4, z: 0}
+  startPosition: {x: 15, y: -4, z: 0}
   speed: 1
   warning: {fileID: 520685626}
   _speedFactor: 0
@@ -3668,7 +3668,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520685621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: -4, z: 0}
+  m_LocalPosition: {x: 15, y: -4, z: 0}
   m_LocalScale: {x: 20, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 918329510}
@@ -8477,6 +8477,7 @@ MonoBehaviour:
   drone: {fileID: 2059629258}
   tiro: {fileID: 1530945593}
   coletavel: {fileID: 1078372425}
+  tutorialAlwaysOn: 0
 --- !u!1 &1841429928
 GameObject:
   m_ObjectHideFlags: 0
