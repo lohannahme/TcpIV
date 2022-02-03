@@ -9,6 +9,8 @@ public class ButtonClick : MonoBehaviour
     [SerializeField] private GameObject _settingsPannel;
     [SerializeField] private GameObject _creditsPannel;
 
+    [SerializeField] private GameObject rankingUi;
+
 
 
     void Start()
@@ -36,5 +38,13 @@ public class ButtonClick : MonoBehaviour
     {
         _settingsPannel.transform.localScale = Vector3.zero;
         _creditsPannel.transform.localScale = Vector3.zero;
+    }
+    public void rankingPannel()
+    {
+        rankingUi.SetActive(true);
+    }
+    public void voltarRanking()
+    {
+        rankingUi.SetActive(false);
     }
 }

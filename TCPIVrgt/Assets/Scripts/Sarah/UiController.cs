@@ -10,6 +10,7 @@ public class UiController : MonoBehaviour
     public static UiController get { get { return _get; } }
     public PlayerController slime;
     //gameover
+    public GameObject luzSlime;
     public GameObject vitoriaUi;
     public GameObject derrotaUi;
     public GameObject botoesUi;
@@ -34,7 +35,7 @@ public class UiController : MonoBehaviour
     void Start()
     {
         _get = this;
-
+        luzSlime.SetActive(true);
         points = 0;
         dist = Mathf.RoundToInt(distance);
         slime = GameObject.FindObjectOfType<PlayerController>();
@@ -75,6 +76,7 @@ public class UiController : MonoBehaviour
     {
         gameOverCheck = true;
         int aux = PlayerPrefs.GetInt("recorde");
+        luzSlime.SetActive(false);
         if (scoreTotal > aux)
         {
             vitoriaUi.transform.LeanScale(Vector3.one, .2f).setIgnoreTimeScale(true);
@@ -127,4 +129,5 @@ public class UiController : MonoBehaviour
         vitoriaUi.transform.localScale = Vector3.zero;
         botoesUi.transform.localScale = Vector3.zero;
     }
+
 }
