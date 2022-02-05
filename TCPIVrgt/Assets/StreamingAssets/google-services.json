@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "549689114996",
+    "firebase_url": "https://run-slimo-run-default-rtdb.firebaseio.com",
+    "project_id": "run-slimo-run",
+    "storage_bucket": "run-slimo-run.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549689114996:android:0d866dc32a113bccaeec21",
+        "android_client_info": {
+          "package_name": "com.grupo2tcp420212.runslimorun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549689114996-8bdqsb87tib3p6ecvsou21jdt1u4mo8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupo2tcp420212.runslimorun",
+            "certificate_hash": "b08193a9c40499ad9893a9596a6a282c78300322"
+          }
+        },
+        {
+          "client_id": "549689114996-oba6k6nhgpb25n2r2o5hd88o9dohkph1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH6cw0JlSK3olZ0UU3SNiyKCk8r2PmZxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549689114996-oba6k6nhgpb25n2r2o5hd88o9dohkph1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

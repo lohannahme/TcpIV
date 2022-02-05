@@ -29,6 +29,8 @@ public class UiController : MonoBehaviour
     public int scoreTotal;
     public int minPowerUp;
     public bool gameOverCheck = false;
+    private int prevRecord;
+    private string tag;
 
     //contagem de coletavel pego
     public int contCol;
@@ -43,6 +45,9 @@ public class UiController : MonoBehaviour
         distanceIncrease = 1;
 
         SetScaleZero();
+
+        FirebaseManager.get.DatabaseManager.OnUserUpdate += OnUserScoreUpdate;
+        FirebaseManager.get.DatabaseManager.GetUserData();
     }
 
     void Update()
@@ -50,7 +55,7 @@ public class UiController : MonoBehaviour
 
         distanceCount();
 
-        Debug.Log(PlayerPrefs.GetInt("recorde"));
+        //Debug.Log(PlayerPrefs.GetInt("recorde"));
         pointsUi.text = points.ToString();
         distanceUi.text = dist.ToString();
         lightCheck();
@@ -75,21 +80,22 @@ public class UiController : MonoBehaviour
     public void gameOver()
     {
         gameOverCheck = true;
-        int aux = PlayerPrefs.GetInt("recorde");
+        int aux = prevRecord;//PlayerPrefs.GetInt("recorde");
         luzSlime.SetActive(false);
         if (scoreTotal > aux)
         {
             vitoriaUi.transform.LeanScale(Vector3.one, .2f).setIgnoreTimeScale(true);
             //vitoriaUi.SetActive(true);
-            PlayerPrefs.SetInt("recorde", scoreTotal);
-            recordeUi.text = PlayerPrefs.GetInt("recorde").ToString();
+            UserData userData = new UserData { username = FirebaseManager.get.AuthManager.GetUserData().DisplayName, score = scoreTotal };
+            FirebaseManager.get.DatabaseManager.UpdateData(userData);// PlayerPrefs.SetInt("recorde", scoreTotal);
+            recordeUi.text = scoreTotal.ToString();// PlayerPrefs.GetInt("recorde").ToString();
         }
         else if (scoreTotal < aux)
         {
             derrotaUi.transform.LeanScale(Vector3.one, .2f).setIgnoreTimeScale(true);
             //derrotaUi.SetActive(true);
             pointsUiDerrota.text = scoreTotal.ToString();
-            recordeTextDerrota.text = PlayerPrefs.GetInt("recorde").ToString();
+            recordeTextDerrota.text = aux.ToString();// PlayerPrefs.GetInt("recorde").ToString();
         }
         botoesUi.transform.LeanScale(Vector3.one, .2f).setIgnoreTimeScale(true);
         Time.timeScale = 0;
@@ -130,4 +136,57 @@ public class UiController : MonoBehaviour
         botoesUi.transform.localScale = Vector3.zero;
     }
 
+    private void OnUserScoreUpdate(Firebase.Database.DataSnapshot data)
+    {
+        Debug.Log("" + data);
+        if (data != null)
+        {
+            string _prescore = data.Value.ToString();
+            int _score = 0;
+            if (int.TryParse(_prescore, out _score))
+                //scoreText.text = _score.ToString();
+                prevRecord = _score;
+            else
+                Debug.LogError(message: "Invalid score data");
+        }
+    }
+    private void OnUserDataUpdate(Firebase.Database.DataSnapshot data)
+    {
+        Debug.Log("" + data + ", " + data.ChildrenCount);
+        if (data != null && data.HasChildren)
+        {
+            Firebase.Database.DataSnapshot nameValue = data.Child("username");
+            if (nameValue == null)
+            {
+                Debug.LogError(message: "No username child.");
+                return;
+            }
+            tag = nameValue.Value.ToString();
+
+            Firebase.Database.DataSnapshot scoreValue = data.Child("score");
+            if (scoreValue == null)
+            {
+                Debug.LogError(message: "No score child.");
+                return;
+            }
+            string _prescore = scoreValue.Value.ToString();
+            int _score = 0;
+            if (int.TryParse(_prescore, out _score))
+                //scoreText.text = _score.ToString();
+                prevRecord = _score;
+            else
+                Debug.LogError(message: "Invalid score data");
+        }
+        else
+            Debug.LogError(message: "No data.");
+    }
+
+    private void OnDestroy()
+    {
+        if (FirebaseManager.get)
+        {
+            if (FirebaseManager.get.DatabaseManager)
+                FirebaseManager.get.DatabaseManager.OnUserUpdate -= OnUserScoreUpdate;
+        }
+    }
 }

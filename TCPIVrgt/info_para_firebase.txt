@@ -1,0 +1,35 @@
+tutorial firebase auth: https:
+1: youtu.be/NsAUEyA2TRo
+tutorial firebase leaderboard:
+1: https://youtu.be/GjyQiq23fBk
+2: //
+
+Android Package Name (aka Bundle Identifier):
+com.grupo2tcp420212.runslimorun
+
+key: slimoKey.keystore
+alias: slimo
+senhas: teste1234
+
+Nome do alias: slimo
+Data de criação: 03/02/2022
+Tipo de entrada: PrivateKeyEntry
+Comprimento da cadeia de certificados: 1
+Certificado[1]:
+Proprietário: O=Grupo 2 TCP 4 2021 2
+Emissor: O=Grupo 2 TCP 4 2021 2
+Número de série: 6cdc199f
+Válido de Thu Feb 03 19:07:30 BRST 2022 até Fri Jan 22 19:07:30 BRST 2072
+
+///////////
+Fingerprints do certificado:
+         MD5:  35:18:FA:3F:A5:75:AA:AF:7E:B1:B0:30:E4:A2:7F:67
+         SHA1: 
+/////////////////////////////////////////////
+B0:81:93:A9:C4:04:99:AD:98:93:A9:59:6A:6A:28:2C:78:30:03:22
+/////////////////////////////////////////////
+         SHA256: D9:C2:D0:B7:CF:E0:22:9D:CE:98:27:F3:5F:69:7F:6B:77:3B:2B:FC:27:ED:A0:47:5B:08:9F:92:DE:64:B7:89
+///////////
+Nome do algoritmo de assinatura: SHA1withRSA
+Algoritmo de Chave Pública do Assunto: Chave RSA de 2048 bits
+Versão: 3
