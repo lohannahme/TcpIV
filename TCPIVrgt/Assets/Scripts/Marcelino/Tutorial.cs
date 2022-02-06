@@ -10,23 +10,25 @@ public class Tutorial : MonoBehaviour
     ETutorialState state = ETutorialState.none;
 
     bool pause = false;
-    int tutorial_off = 0;
+    bool tutorial_onn = true;
     [SerializeField] bool tutorialAlwaysOn = false;
+
+    [SerializeField] float timeScale = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
         if (PlayerPrefs.HasKey("tutorial_off") && !tutorialAlwaysOn)
-            tutorial_off = PlayerPrefs.GetInt("tutorial_off");
+            tutorial_onn = PlayerPrefs.GetInt("tutorial_off") == 0;
 
         rede.SetActive(false);
         drone.SetActive(false);
         tiro.SetActive(false);
         coletavel.SetActive(false);
 
-        if (tutorial_off == 0)
+        if (tutorial_onn)
         {
-            PlayerController.get.jumpEvent.AddListener(OnRedeHandler);
+            /*PlayerController.get.jumpEvent.AddListener(OnRedeHandler);
             PlayerController.get.jumpEvent.AddListener(OnTiroHandler);
             PlayerController.get.jumpEvent.AddListener(OnColetavelHandler);
 
@@ -35,13 +37,20 @@ public class Tutorial : MonoBehaviour
             PlayerController.get.crouchEvent.AddListener(OnColetavelHandler);
 
             PlayerController.get.diveEvent.AddListener(OnTiroHandler);
-            PlayerController.get.diveEvent.AddListener(OnColetavelHandler);
+            PlayerController.get.diveEvent.AddListener(OnColetavelHandler);*/
+
+            PlayerController.get.hitEvent.AddListener(BlockTutorial);
         }
+    }
+
+    private void OnDestroy()
+    {
+        BlockTutorial();
     }
 
     private void TutorialOn(GameObject panel, ETutorialState _state)
     {
-        if (tutorial_off != 0)
+        if (!tutorial_onn)
             return;
 
         rede.SetActive(false);
@@ -50,7 +59,7 @@ public class Tutorial : MonoBehaviour
         coletavel.SetActive(false);
 
         pause = true;
-        Time.timeScale = 0.5f;
+        Time.timeScale = timeScale;
 
         panel.SetActive(true);
         state = _state;
@@ -78,7 +87,7 @@ public class Tutorial : MonoBehaviour
 
     private void TutorialOff(GameObject panel, ETutorialState _state)
     {
-        if (tutorial_off != 0)
+        if (!tutorial_onn)
             return;
 
         pause = false;
@@ -106,16 +115,63 @@ public class Tutorial : MonoBehaviour
 
     public void EndTutorial()
     {
-        if (tutorial_off != 0)
-            return;
-        //state = ETutorialState.none;
-        TutorialOff(coletavel, ETutorialState.coletavel);//coletavel.SetActive(false);
-        if (tutorialAlwaysOn)
+        if (tutorial_onn)
         {
-            if (PlayerPrefs.HasKey("tutorial_off"))
-                PlayerPrefs.DeleteKey("tutorial_off");
+            //state = ETutorialState.none;
+            //TutorialOff(coletavel, ETutorialState.coletavel);//coletavel.SetActive(false);
+            if (tutorialAlwaysOn)
+            {
+                if (PlayerPrefs.HasKey("tutorial_off"))
+                    PlayerPrefs.DeleteKey("tutorial_off");
+            }
+            else
+                PlayerPrefs.SetInt("tutorial_off", 1);
+
+            BlockTutorial();
         }
-        else
-            PlayerPrefs.SetInt("tutorial_off", 1);
+    }
+
+    public void CloseActualTutorial()
+    {
+        if (!tutorial_onn)
+            return;
+
+        switch (state)
+        {
+            case ETutorialState.rede:
+                OnRedeHandler();
+                break;
+            case ETutorialState.drone:
+                OnDroneHandler();
+                break;
+            case ETutorialState.tiro:
+                OnTiroHandler();
+                break;
+            case ETutorialState.coletavel:
+                OnColetavelHandler();
+                break;
+        }
+    }
+
+    private void BlockTutorial()
+    {
+        if (tutorial_onn)
+        {
+            CloseActualTutorial();
+
+            /*PlayerController.get.jumpEvent.RemoveListener(OnRedeHandler);
+            PlayerController.get.jumpEvent.RemoveListener(OnTiroHandler);
+            PlayerController.get.jumpEvent.RemoveListener(OnColetavelHandler);
+
+            PlayerController.get.crouchEvent.RemoveListener(OnDroneHandler);
+            PlayerController.get.crouchEvent.RemoveListener(OnTiroHandler);
+            PlayerController.get.crouchEvent.RemoveListener(OnColetavelHandler);
+
+            PlayerController.get.diveEvent.RemoveListener(OnTiroHandler);
+            PlayerController.get.diveEvent.RemoveListener(OnColetavelHandler);*/
+
+            PlayerController.get.hitEvent.RemoveListener(EndTutorial);
+        }
+        tutorial_onn = false;
     }
 }

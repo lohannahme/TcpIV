@@ -16,12 +16,21 @@ public class UserData
 [System.Serializable]
 public class ScoreBoard
 {
+    public Text pos;
     public Text text;
+    public bool user;
 
-    public void Update(string username, int score, bool sameAsUser)
+    public void Update(string username, int score, int pos, bool sameAsUser = false)
     {
-        this.text.text = username + "-" + score;
-        this.text.color = (sameAsUser ? Color.yellow : Color.white);
+        if (this.pos != null)
+            this.pos.text = (pos > 0 ? pos.ToString("D2") : "--") + ".";
+
+        this.text.text = username + (score > 0 ? "-" + score : "");
+
+        if (user)
+            this.text.color = Color.yellow;
+        else
+            this.text.color = (sameAsUser ? Color.yellow : Color.white);
     }
 }
 
@@ -118,14 +127,14 @@ public class LeaderboardController : MonoBehaviour
         else
             Debug.LogError(message: "No data.");
     }*/
-    private void OnUserUpdateHandler(UserData data/*, int pos*/)
+    private void OnUserUpdateHandler(UserData data, int pos)
     {
         /*usernameText.text = data.username;
         scoreText.text = data.score.ToString();
 
         LeaderBoard[4].Update(pos.ToString(), data.username, data.score,
                             true);*/
-        userScores.Update(data.username, data.score, true);
+        userScores.Update(data.username, data.score, pos, true);
     }
 
     public void OnUpdateLeaderboard()
@@ -173,12 +182,12 @@ public class LeaderboardController : MonoBehaviour
                 if (sameAsUser)
                 {
                     Debug.Log("same as user");
-                    OnUserUpdateHandler(userData/*, i + 1*/);
+                    OnUserUpdateHandler(userData, i + 1);
                 }
                 if (i < leaderBoard.Length && i >= 0)
                 {
                     leaderBoard[i].Update(userData.username, userData.score,
-                                sameAsUser);
+                                i + 1, sameAsUser);
                     Debug.Log(i);
                 }
             }
@@ -194,9 +203,18 @@ public class LeaderboardController : MonoBehaviour
     {
         for (int i = 0; i < leaderBoard.Length; i++)
         {
-            leaderBoard[i].text.text = "-";
-            leaderBoard[i].text.color = Color.white;
+            /*leaderBoard[i].text.text = "-";
+
+            if (leaderBoard[i].user)
+            {
+                leaderBoard[i].text.color = Color.yellow;
+                leaderBoard[i].pos.text = "--.";
+            }
+
+            leaderBoard[i].text.color = Color.white;*/
+            leaderBoard[i].Update("", 0, i + 1);
         }
-        userScores.text.text = "-";
+        userScores.Update("", 0, 0, true);
+        //userScores.text.text = "-";
     }
 }

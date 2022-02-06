@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SlimoClick : MonoBehaviour
 {
-    [SerializeField] private float _move;
+    [SerializeField] private float _bigButtonMove = -110;
+    [SerializeField] private float _smallButtonsMove = 58;
     [SerializeField] private GameObject _buttons;
     [SerializeField] private Animator _buttonAnimator;
 
@@ -16,9 +17,9 @@ public class SlimoClick : MonoBehaviour
     {
         if (_sideLeft)
         {
-            transform.LeanMoveLocalX(-110, .3f).setIgnoreTimeScale(true);
+            transform.LeanMoveLocalX(_bigButtonMove, .3f).setIgnoreTimeScale(true);
 
-            _buttons.transform.LeanMoveLocalX(58, .3f).setIgnoreTimeScale(true);
+            _buttons.transform.LeanMoveLocalX(_smallButtonsMove, .3f).setIgnoreTimeScale(true);
             _buttonAnimator.SetBool("Buttonfade", true);
 
             _sideLeft = false;
