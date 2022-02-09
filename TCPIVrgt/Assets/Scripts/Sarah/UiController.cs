@@ -17,6 +17,10 @@ public class UiController : MonoBehaviour
     public Text recordeUi;
     public Text pointsUiDerrota;
     public Text recordeTextDerrota;
+
+    public AudioClip vitoriaAudio;
+    public AudioClip derrotaAudio;
+    public AudioSource endGame;
     //
     public Text pointsUi;
     public Text distanceUi;
@@ -85,14 +89,18 @@ public class UiController : MonoBehaviour
         if (scoreTotal > aux)
         {
             vitoriaUi.transform.LeanScale(Vector3.one, .2f).setIgnoreTimeScale(true);
+            endGame.clip = vitoriaAudio;
+            endGame.Play();
             //vitoriaUi.SetActive(true);
             UserData userData = new UserData { username = FirebaseManager.get.AuthManager.GetUserData().DisplayName, score = scoreTotal };
             FirebaseManager.get.DatabaseManager.UpdateData(userData);// PlayerPrefs.SetInt("recorde", scoreTotal);
             recordeUi.text = scoreTotal.ToString();// PlayerPrefs.GetInt("recorde").ToString();
         }
-        else if (scoreTotal < aux)
+        else if (scoreTotal <= aux)
         {
             derrotaUi.transform.LeanScale(Vector3.one, .2f).setIgnoreTimeScale(true);
+            endGame.clip = derrotaAudio;
+            endGame.Play();
             //derrotaUi.SetActive(true);
             pointsUiDerrota.text = scoreTotal.ToString();
             recordeTextDerrota.text = aux.ToString();// PlayerPrefs.GetInt("recorde").ToString();
