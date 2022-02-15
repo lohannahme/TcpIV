@@ -217,4 +217,18 @@ public class RythmEvents : MonoBehaviour
     {
         ObstacleManager.get.SpawnColetavel();
     }
+
+    //////////////////////////////
+    public void Lancar_rede()
+    {
+        //
+    }
+    public void Lancar_drone()
+    {
+        //
+    }
+    public void Atirar()
+    {
+        //
+    }
 }
