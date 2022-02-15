@@ -38,13 +38,14 @@ public class ButtonClick : MonoBehaviour
     {
         _settingsPannel.transform.localScale = Vector3.zero;
         _creditsPannel.transform.localScale = Vector3.zero;
+        rankingUi.transform.localScale = Vector3.zero;
     }
     public void rankingPannel()
     {
-        rankingUi.SetActive(true);
+       // rankingUi.SetActive(true);
     }
     public void voltarRanking()
     {
-        rankingUi.SetActive(false);
+       // rankingUi.SetActive(false);
     }
 }
