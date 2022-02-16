@@ -25,6 +25,10 @@ public class UiController : MonoBehaviour
     public Text pointsUi;
     public Text distanceUi;
     public GameObject pausedUi;
+    public Image pauseButtonImg;
+    public Sprite pauseSprite;
+    public Sprite playSprite;
+
     public int points;
     private float distance;
     private float distanceConst;
@@ -74,10 +78,12 @@ public class UiController : MonoBehaviour
     {
         if (!gameOverCheck)
         {
-            Time.timeScale = Time.timeScale == 1.0f ? 0.0f : 1.0f;
-            if (Time.timeScale == 1.0f) pausedUi.SetActive(false);
-            if (Time.timeScale == 0.0f) pausedUi.SetActive(true);
+            bool paused = Time.timeScale == 1.0f;
+            Time.timeScale = /*Time.timeScale == 1.0f*/paused ? 0.0f : 1.0f;
+            /*if (Time.timeScale == 1.0f) */pausedUi.SetActive(paused);
+            //if (Time.timeScale == 0.0f) pausedUi.SetActive(true);
             slime.walkSound.Stop();
+            pauseButtonImg.sprite = paused ? playSprite : pauseSprite;
         }
 
     }

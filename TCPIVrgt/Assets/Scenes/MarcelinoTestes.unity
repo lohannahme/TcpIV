@@ -4158,6 +4158,9 @@ MonoBehaviour:
   pointsUi: {fileID: 648706254}
   distanceUi: {fileID: 1438160067}
   pausedUi: {fileID: 4330852093852990220}
+  pauseButtonImg: {fileID: 680806666}
+  pauseSprite: {fileID: 21300000, guid: f626db69d9dc08f4bb2fec5e59db9a9f, type: 3}
+  playSprite: {fileID: 21300000, guid: 58db568e0fbcb594fb2cfd87aef4f953, type: 3}
   points: 0
   distanceIncrease: 0
   dist: 0
@@ -10979,7 +10982,7 @@ MonoBehaviour:
   drone: {fileID: 2059629258}
   tiro: {fileID: 1530945593}
   coletavel: {fileID: 1078372425}
-  tutorialAlwaysOn: 1
+  tutorialAlwaysOn: 0
   timeScale: 1
 --- !u!1 &1841429928
 GameObject:
