@@ -7,13 +7,13 @@ public class BasicChangeSceneLogo : MonoBehaviour
 {
     void Start()
     {
-        
+        StartCoroutine(NextScene());
     }
 
 
     IEnumerator NextScene()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

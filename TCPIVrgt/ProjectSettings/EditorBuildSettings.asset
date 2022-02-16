@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/TitleScreen.unity
+    guid: 7090d813750dfc548b3483ad90b2b610
+  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: fd3b28c92426cce4dbecee604f36a28a
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: cc8125b524dee814493f1f0708deef01
   - enabled: 1
     path: Assets/Scenes/MarcelinoTestes.unity
     guid: 14e8b5f3aa4aa4a4289b80dd0a579935

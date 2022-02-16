@@ -87,7 +87,7 @@ public class AccountUIController : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(_user.UserId))
             {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 return;
             }
         }
